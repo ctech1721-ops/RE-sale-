@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RE SALE — Laptop & Mobile Resale</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ============ HEADER / NAV ============ -->
+<header class="site-header">
+  <div class="container header-inner">
+    <a href="#" class="logo" data-nav="home">
+      <span class="logo-box">RS</span>
+      <span class="logo-text">RE-sale<small>USED · TESTED · CERTIFIED</small></span>
+    </a>
+
+    <nav class="main-nav" id="mainNav">
+      <a href="#" data-nav="home" class="nav-link active">Home</a>
+      <a href="#" data-nav="about" class="nav-link">About Us</a>
+      <a href="#" data-nav="buy" class="nav-link"> Buy</a>
+      <a href="#" data-nav="dashboard" class="nav-link">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:-2px;margin-right:4px;"><rect x="5" y="11" width="14" height="9" rx="1.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
+        Dashboard
+      </a>
+    </nav>
+
+    <div class="header-actions">
+      <a href="#" data-nav="sell" class="btn btn-primary btn-sm">Sell My Tech</a>
+      <button class="menu-toggle" id="menuToggle" aria-label="Open menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <!-- ======================================================= -->
+  <!-- HOME -->
+  <!-- ======================================================= -->
+  <section class="page active" id="page-home">
+    <div class="hero">
+      <div class="container hero-inner">
+        <div class="hero-copy">
+          <p class="eyebrow eyebrow-dark">Buy Smart · Sell Easy · Save up to 50%</p>
+          <h1>Give Your  <em>  Device a</em><br>Second Life</h1>
+          <p class="hero-sub">Every laptop and mobile is carefully inspected and performance-tested before it's listed. View the exact condition, battery health, and detailed specifications with complete transparency—so you can shop with confidence.</p>
+          <div class="hero-cta">
+            <a href="#" data-nav="sell" class="btn btn-primary">Sell My Old Tech</a>
+            <a href="#" data-nav="buy" class="btn btn-outline">Shop Tested Devices</a>
+          </div>
+          <div class="hero-tags">
+            <span>✓ Secure data wiping</span>
+            <span></span>
+            <span></span>
+          </div>
+        </div>
+        <div class="hero-visual" aria-hidden="true">
+          <div class="hero-badge">100% <br>Functional<br> Tested</div>
+          <div class="hero-device">
+            <svg width="220" height="220" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.1">
+              <rect x="3" y="4" width="13" height="9" rx="1"/><path d="M1 16h17l-1.4 2H2.4z"/>
+              <rect x="16.5" y="7" width="6.5" height="12" rx="1.4"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="stat-strip">
+      <div class="container stat-strip-inner">
+        <div class="stat"><strong>100%</strong><span>Quality Checked</span></div>
+        <div class="stat"><strong>Best</strong><span>Market Pricing</span></div>
+        <div class="stat"><strong>Easy</strong><span>Trade-in Process</span></div>
+        <div class="stat"><strong></strong><span></span></div>
+      </div>
+    </div>
+
+    <div class="container home-featured">
+      <div class="section-head">
+        <p class="eyebrow">Fresh in stock</p>
+        <h2>Popular right now</h2>
+      </div>
+      <div class="product-grid" id="homeFeaturedGrid"></div>
+      <div class="center-btn"><a href="#" data-nav="buy" class="btn btn-outline">View all devices</a></div>
+    </div>
+  </section>
+
+  <!-- ======================================================= -->
+  <!-- ABOUT US -->
+  <!-- ======================================================= -->
+  <section class="page" id="page-about">
+    <div class="container simple-page">
+      <p class="eyebrow">About Us</p>
+      <h2>We give good hardware a second life</h2>
+      <p class="lead-text">RE-sale is your trusted destination for quality pre-owned laptops and mobile phones. Every device is carefully inspected, performance-tested, and evaluated before being listed, ensuring transparent quality, reliable performance, and complete peace of mind with every purchase.</p>
+
+      <div class="about-grid">
+        <div class="about-card">
+          <h3>Complete Device Inspection</h3>
+          <p>Every laptop and mobile undergoes a detailed 10-point inspection covering the display, battery, ports, body condition, and overall performance before it's listed.</p>
+        </div>
+        <div class="about-card">
+          <h3>Secure Data Protection</h3>
+          <p>Every traded-in device undergoes a complete data removal process before resale, ensuring your personal information remains private and protected.</p>
+        </div>
+        <div class="about-card">
+          <h3>Trusted Quality</h3>
+          <p>Every laptop and mobile is carefully inspected to ensure reliable performance, excellent condition, and long-lasting value.</p>
+        </div>
+        <div class="about-card">
+          <h3>Dedicated Customer Support</h3>
+          <p>Our support team is always ready to assist you with product inquiries, device selection, and after-sales assistance for a smooth experience.</p>
+        </div>
+      </div>
+
+      <div class="about-contact">
+        <h3>Get in touch</h3>
+        <p>📞 +91 84896 53981 &nbsp;·&nbsp; ✉️ resale7100@gmail.com &nbsp;·&nbsp; 🕒 Mon–Sat, 9AM–9PM</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================= -->
+  <!-- BUY TECH -->
+  <!-- ======================================================= -->
+  <section class="page" id="page-buy">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">Catalogue</p>
+        <h2> Gadgets</h2>
+      </div>
+
+      <div class="filter-bar">
+        <input type="text" id="searchInput" class="search-input" placeholder="Search MacBook, iPhone, Galaxy, specs...">
+        <div class="filter-row">
+          <div class="filter-group">
+            <span class="filter-label">Type</span>
+            <button class="chip active" data-type="all">All</button>
+            <button class="chip" data-type="laptop">Laptops</button>
+            <button class="chip" data-type="mobile">Mobiles</button>
+          </div>
+          <div class="filter-group">
+            <span class="filter-label">Condition</span>
+            <button class="chip active" data-condition="all">All</button>
+            <button class="chip" data-condition="Like New">Like New</button>
+            <button class="chip" data-condition="Excellent">Excellent</button>
+            <button class="chip" data-condition="Good">Good</button>
+          </div>
+        </div>
+      </div>
+
+      <p class="result-count" id="resultCount"></p>
+      <div class="product-grid" id="buyGrid"></div>
+    </div>
+  </section>
+
+  <!-- ======================================================= -->
+  <!-- SELL YOUR GADGET -->
+  <!-- ======================================================= -->
+  <section class="page" id="page-sell">
+    <div class="container sell-inner">
+      <div class="sell-copy">
+        <p class="eyebrow">Got an old device?</p>
+        <h2>Sell your laptop or phone</h2>
+        <p class="lead-text">Fill in your device details below. Our team will review it and call you to confirm the pickup and final price.</p>
+        <ol class="sell-steps">
+          <li><strong>Submit device details.</strong> Tell us the brand, model and condition.</li>
+          <li><strong>We call you.</strong> Our team confirms an estimated price.</li>
+          <li><strong>Free pickup & instant payment.</strong> Get paid the moment it's collected.</li>
+        </ol>
+      </div>
+      <div class="form-card">
+        <h3>Device details</h3>
+        <form id="sellForm">
+          <label>Device type
+            <select id="sellType" required>
+              <option value="">Select</option>
+              <option>Laptop</option>
+              <option>Mobile</option>
+            </select>
+          </label>
+          <label>Brand & model
+            <input type="text" id="sellBrandModel" placeholder="e.g. Dell XPS 13, iPhone 12" required>
+          </label>
+          <label>Condition
+            <select id="sellCondition" required>
+              <option value="">Select</option>
+              <option>Like New</option>
+              <option>Excellent</option>
+              <option>Good</option>
+              <option>Needs Repair</option>
+            </select>
+          </label>
+          <label>Expected price (₹)
+            <input type="number" id="sellPrice" placeholder="e.g. 15000">
+          </label>
+          <div class="form-divider">Your contact details</div>
+          <label>Full name
+            <input type="text" id="sellName" required>
+          </label>
+          <label>Phone number
+            <input type="tel" id="sellPhone" placeholder="10-digit mobile number" required>
+          </label>
+          <label>Email
+            <input type="email" id="sellEmail" required>
+          </label>
+          <button type="submit" class="btn btn-primary btn-block">Submit device</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================= -->
+  <!-- DASHBOARD -->
+  <!-- ======================================================= -->
+  <section class="page" id="page-dashboard">
+    <div class="container">
+
+      <!-- Login gate -->
+      <div class="dash-login" id="dashLogin">
+        <div class="dash-login-card">
+          <span class="lock-icon">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="5" y="11" width="14" height="9" rx="1.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
+          </span>
+          <h2>Admin Dashboard</h2>
+          <p>This area is locked. Enter the admin password to continue.</p>
+          <form id="dashLoginForm">
+            <input type="password" id="dashPassword" placeholder="Password" required>
+            <button type="submit" class="btn btn-primary btn-block">Unlock Dashboard</button>
+          </form>
+          <p class="dash-hint"> <code></code></p>
+          <p class="dash-error" id="dashError"></p>
+        </div>
+      </div>
+
+      <!-- Dashboard content -->
+      <div class="dash-content" id="dashContent" hidden>
+        <div class="dash-head">
+          <div>
+            <p class="eyebrow">Admin</p>
+            <h2>Dashboard</h2>
+          </div>
+          <button class="btn btn-outline btn-sm" id="dashLogout">Log out</button>
+        </div>
+
+        <div class="dash-stats">
+          <div class="dash-stat"><strong id="statGadgets">0</strong><span>Gadgets listed</span></div>
+          <div class="dash-stat"><strong id="statSell">0</strong><span>Sell requests</span></div>
+          <div class="dash-stat"><strong id="statOrders">0</strong><span>Orders received</span></div>
+        </div>
+
+        <div class="dash-tabs">
+          <button class="dash-tab active" data-tab="gadgets">Gadgets</button>
+          <button class="dash-tab" data-tab="sellreq">Sell Requests</button>
+          <button class="dash-tab" data-tab="orders">Orders</button>
+        </div>
+
+        <!-- Gadgets tab -->
+        <div class="dash-panel active" id="panel-gadgets">
+          <div class="dash-panel-grid">
+            <div class="form-card">
+              <h3>Add a gadget to Buy Tech</h3>
+              <form id="addGadgetForm">
+                <label>Gadget image
+                  <input type="file" id="gImage" accept="image/*">
+                </label>
+                <div class="img-preview-wrap" id="gImagePreviewWrap" hidden>
+                  <img id="gImagePreview" alt="Preview">
+                  <button type="button" id="gImageRemove" class="img-preview-remove">&times;</button>
+                </div>
+                <label>Type
+                  <select id="gType" required>
+                    <option value="laptop">Laptop</option>
+                    <option value="mobile">Mobile</option>
+                  </select>
+                </label>
+                <label>Brand
+                  <input type="text" id="gBrand" placeholder="e.g. Apple" required>
+                </label>
+                <label>Title
+                  <input type="text" id="gTitle" placeholder="e.g. MacBook Pro 14&quot; M3" required>
+                </label>
+                <label>Condition
+                  <select id="gCondition" required>
+                    <option>Like New</option>
+                    <option>Excellent</option>
+                    <option>Good</option>
+                  </select>
+                </label>
+                <label>Battery health (%)
+                  <input type="number" id="gBattery" min="1" max="100" value="90" required>
+                </label>
+                <label>Specs (comma separated)
+                  <input type="text" id="gSpecs" placeholder="16GB RAM, 512GB SSD, M3 chip">
+                </label>
+                <label>Selling price (₹)
+                  <input type="number" id="gPrice" required>
+                </label>
+                <button type="submit" class="btn btn-primary btn-block">Add gadget</button>
+              </form>
+            </div>
+
+            <div class="table-card">
+              <h3>Listed gadgets</h3>
+              <div class="table-wrap">
+                <table>
+                  <thead><tr><th>Title</th><th>Type</th><th>Condition</th><th>Price</th><th></th></tr></thead>
+                  <tbody id="gadgetsTableBody"></tbody>
+                </table>
+              </div>
+              <p class="table-empty" id="gadgetsEmpty">No gadgets yet.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sell requests tab -->
+        <div class="dash-panel" id="panel-sellreq">
+          <div class="table-card table-card-full">
+            <h3>Customer sell requests</h3>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Device</th><th>Condition</th><th>Expected ₹</th><th>Name</th><th>Phone</th><th>Email</th><th>Date</th><th></th></tr></thead>
+                <tbody id="sellTableBody"></tbody>
+              </table>
+            </div>
+            <p class="table-empty" id="sellEmpty">No sell requests yet.</p>
+          </div>
+        </div>
+
+        <!-- Orders tab -->
+        <div class="dash-panel" id="panel-orders">
+          <div class="table-card table-card-full">
+            <h3>Customer orders</h3>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Product</th><th>Price</th><th>Name</th><th>Phone</th><th>Email</th><th>Date</th><th></th></tr></thead>
+                <tbody id="ordersTableBody"></tbody>
+              </table>
+            </div>
+            <p class="table-empty" id="ordersEmpty">No orders yet.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============ ORDER MODAL ============ -->
+<div class="modal-overlay" id="orderModalOverlay">
+  <div class="modal">
+    <button class="modal-close" id="orderModalClose" aria-label="Close">&times;</button>
+    <h3>Confirm your order</h3>
+    <p class="modal-product" id="modalProductLine"></p>
+    <form id="orderForm">
+      <label>Full name
+        <input type="text" id="orderName" required>
+      </label>
+      <label>Phone number
+        <input type="tel" id="orderPhone" placeholder="10-digit mobile number" required>
+      </label>
+      <label>Email
+        <input type="email" id="orderEmail" required>
+      </label>
+      <button type="submit" class="btn btn-primary btn-block">Place Order</button>
+    </form>
+  </div>
+</div>
+
+<!-- ============ CONFIRMATION TOAST ============ -->
+<div class="toast" id="toast"></div>
+
+<!-- ============ FOOTER ============ -->
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <div class="footer-brand">
+      <span class="logo-box">RT</span>
+      <div>
+        <strong>RE-sale</strong>
+        <p>Quality Pre-Owned Laptops & Mobiles.Inspected · Tested · Trusted</p>
+      </div>
+    </div>
+    <div class="footer-cols">
+      <div>
+        <h4>Explore</h4>
+        <a href="#" data-nav="home">Home</a>
+        <a href="#" data-nav="about">About Us</a>
+        <a href="#" data-nav="buy">Buy Tech</a>
+        <a href="#" data-nav="sell">Sell My Tech</a>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <a href="tel:+919876543210">+91 84896 53981</a>
+        <a href="mailto:resale7100@gmail.com">resale7100@gmail.com</a>
+      </div>
+    </div>
+  </div>
+  <div class="container footer-bottom">© 2026 RE-sale.</div>
+</footer>
+
+<script type="module" src="firebase.js"></script>
+<script type="module" src="script.js"></script>
+
+</body>
+</html>
