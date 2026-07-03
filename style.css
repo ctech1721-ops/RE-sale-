@@ -72,7 +72,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
   position:sticky;top:0;z-index:50;background:rgba(255,255,255,0.98);
   border-bottom:1px solid var(--line);
 }
-.header-inner{display:flex;align-items:center;justify-content:space-between;height:74px;flex-wrap:wrap;gap:10px;}
+.header-inner{display:flex;align-items:center;justify-content:space-between;height:74px;gap:10px;}
 .logo{display:flex;align-items:center;gap:10px;}
 .logo-box{
   width:34px;height:34px;border-radius:9px;background:var(--blue);
@@ -375,18 +375,24 @@ tbody tr:last-child td{border-bottom:none;}
   .dash-panel-grid{grid-template-columns:1fr;}
 }
 @media (max-width:760px){
-  /* Mobile nav now covers the FULL screen (top:0) instead of relying on a
-     fixed header-height offset (top:74px). That old approach broke when
-     the header wrapped to two lines on narrow screens, causing the menu
-     to overlap page content instead of sitting cleanly below it. */
+  /* Side drawer: fixed-width panel sliding in from the right, instead of
+     a full-screen overlay. Nested inside .site-header (which no longer
+     has backdrop-filter), so position:fixed correctly targets the
+     viewport regardless of header height. */
+  .header-inner{padding-right:4px;}
+  .logo-text{font-size:14.5px;}
+  .header-actions .btn-sm{padding:8px 12px;font-size:12.5px;}
+
   .main-nav{
-    position:fixed;top:0;left:0;right:0;bottom:0;background:var(--surface);
+    position:fixed;top:0;right:0;bottom:0;left:auto;
+    width:min(72vw,280px);background:var(--surface);
     flex-direction:column;align-items:flex-start;gap:0;
-    padding:100px 24px 24px;
-    transform:translateY(-110%);transition:transform .25s ease;
+    padding:90px 22px 24px;
+    transform:translateX(100%);transition:transform .25s ease;
     z-index:60;overflow-y:auto;
+    box-shadow:-10px 0 34px rgba(10,18,36,0.22);
   }
-  .main-nav.open{transform:translateY(0);}
+  .main-nav.open{transform:translateX(0);}
   .main-nav a{width:100%;padding:14px 0;border-bottom:1px solid var(--line);}
   .nav-link.active::after{display:none;}
   .menu-toggle{display:flex;}
