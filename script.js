@@ -2,7 +2,7 @@
    RE-TECH — script.js
    Full site logic + Firebase Firestore integration
 =================================================================== */
-
+ 
 import {
   db,
   collection,
@@ -12,70 +12,72 @@ import {
   onSnapshot,
   query,
   orderBy,
-  serverTimestamp
+  serverTimestamp,
+  auth,
+  signInWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged
 } from "./firebase.js";
-
+ 
 /* ===================================================================
    STATE
 =================================================================== */
 let products = [];
 let sellRequests = [];
 let orders = [];
-
+ 
 let typeFilter = "all";
 let conditionFilter = "all";
-
+ 
 let currentOrderProduct = null;
 let pendingImageData = null;
-
-const ADMIN_PASSWORD = "admin123";
-const AUTH_KEY = "retech_admin_auth";
-
+ 
 /* ===================================================================
    DOM REFS
 =================================================================== */
 const mainNav = document.getElementById("mainNav");
 const menuToggle = document.getElementById("menuToggle");
-
+ 
 const homeFeaturedGrid = document.getElementById("homeFeaturedGrid");
-
+ 
 const searchInput = document.getElementById("searchInput");
 const resultCount = document.getElementById("resultCount");
 const buyGrid = document.getElementById("buyGrid");
-
+ 
 const sellForm = document.getElementById("sellForm");
-
+ 
 const dashLogin = document.getElementById("dashLogin");
 const dashLoginForm = document.getElementById("dashLoginForm");
+const dashEmail = document.getElementById("dashEmail");
 const dashPassword = document.getElementById("dashPassword");
 const dashError = document.getElementById("dashError");
 const dashContent = document.getElementById("dashContent");
 const dashLogout = document.getElementById("dashLogout");
-
+ 
 const statGadgets = document.getElementById("statGadgets");
 const statSell = document.getElementById("statSell");
 const statOrders = document.getElementById("statOrders");
-
+ 
 const addGadgetForm = document.getElementById("addGadgetForm");
 const gImageInput = document.getElementById("gImage");
 const gImagePreviewWrap = document.getElementById("gImagePreviewWrap");
 const gImagePreview = document.getElementById("gImagePreview");
 const gImageRemove = document.getElementById("gImageRemove");
-
+ 
 const gadgetsTableBody = document.getElementById("gadgetsTableBody");
 const gadgetsEmpty = document.getElementById("gadgetsEmpty");
 const sellTableBody = document.getElementById("sellTableBody");
 const sellEmpty = document.getElementById("sellEmpty");
 const ordersTableBody = document.getElementById("ordersTableBody");
 const ordersEmpty = document.getElementById("ordersEmpty");
-
+ 
 const orderModalOverlay = document.getElementById("orderModalOverlay");
 const orderModalClose = document.getElementById("orderModalClose");
 const modalProductLine = document.getElementById("modalProductLine");
 const orderForm = document.getElementById("orderForm");
-
+ 
 const toast = document.getElementById("toast");
-
+ 
 /* ===================================================================
    ROUTER
 =================================================================== */
@@ -83,26 +85,26 @@ function navigateTo(pageName) {
   document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
   const target = document.getElementById("page-" + pageName);
   if (target) target.classList.add("active");
-
+ 
   document.querySelectorAll(".nav-link").forEach(link => {
     link.classList.toggle("active", link.dataset.nav === pageName);
   });
-
+ 
   mainNav.classList.remove("open");
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
-
+ 
 document.querySelectorAll("[data-nav]").forEach(el => {
   el.addEventListener("click", e => {
     e.preventDefault();
     navigateTo(el.dataset.nav);
   });
 });
-
+ 
 menuToggle.addEventListener("click", () => {
   mainNav.classList.toggle("open");
 });
-
+ 
 /* ===================================================================
    TOAST
 =================================================================== */
@@ -113,7 +115,7 @@ function showToast(message) {
   clearTimeout(toastTimer);
   toastTimer = setTimeout(() => toast.classList.remove("show"), 2600);
 }
-
+ 
 /* ===================================================================
    PRODUCT CARD BUILDER
 =================================================================== */
@@ -122,21 +124,21 @@ function conditionPillClass(condition) {
   if (condition === "Excellent") return "pill-cond-2";
   return "pill-cond-3";
 }
-
+ 
 function deviceIconSVG() {
   return `<svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.1">
     <rect x="3" y="4" width="13" height="9" rx="1"/><path d="M1 16h17l-1.4 2H2.4z"/>
     <rect x="16.5" y="7" width="6.5" height="12" rx="1.4"/>
   </svg>`;
 }
-
+ 
 function buildProductCard(p) {
   const card = document.createElement("div");
   card.className = "product-card";
-
+ 
   const specs = Array.isArray(p.specs) ? p.specs : [];
   const price = Number(p.price) || 0;
-
+ 
   card.innerHTML = `
     <div class="card-media">
       ${p.image ? `<img src="${p.image}" alt="${escapeHTML(p.title || "")}">` : deviceIconSVG()}
@@ -160,70 +162,70 @@ function buildProductCard(p) {
       </div>
     </div>
   `;
-
+ 
   card.querySelector("[data-order-btn]").addEventListener("click", () => openOrderModal(p));
-
+ 
   return card;
 }
-
+ 
 function escapeHTML(str) {
   const div = document.createElement("div");
   div.textContent = str;
   return div.innerHTML;
 }
-
+ 
 /* ===================================================================
    HOME — FEATURED GRID
 =================================================================== */
 function renderHomeFeatured() {
   homeFeaturedGrid.innerHTML = "";
   const featured = products.slice(0, 3);
-
+ 
   if (featured.length === 0) {
     homeFeaturedGrid.innerHTML = `<p style="color:var(--muted);grid-column:1/-1;padding:20px 0;">No devices listed yet.</p>`;
     return;
   }
-
+ 
   const frag = document.createDocumentFragment();
   featured.forEach(p => frag.appendChild(buildProductCard(p)));
   homeFeaturedGrid.appendChild(frag);
 }
-
+ 
 /* ===================================================================
    BUY TECH — GRID + FILTERS + SEARCH
 =================================================================== */
 function renderBuyGrid() {
   const q = (searchInput.value || "").trim().toLowerCase();
-
+ 
   const list = products.filter(p => {
     const matchesType = typeFilter === "all" || p.type === typeFilter;
     const matchesCondition = conditionFilter === "all" || p.condition === conditionFilter;
-
+ 
     const haystack = (
       (p.title || "") + " " +
       (p.brand || "") + " " +
       ((p.specs || []).join(" "))
     ).toLowerCase();
-
+ 
     const matchesSearch = q === "" || haystack.includes(q);
-
+ 
     return matchesType && matchesCondition && matchesSearch;
   });
-
+ 
   resultCount.textContent = `Showing ${list.length} of ${products.length} certified items`;
-
+ 
   buyGrid.innerHTML = "";
-
+ 
   if (list.length === 0) {
     buyGrid.innerHTML = `<p style="color:var(--muted);grid-column:1/-1;padding:30px 0;text-align:center;">No devices match your search.</p>`;
     return;
   }
-
+ 
   const frag = document.createDocumentFragment();
   list.forEach(p => frag.appendChild(buildProductCard(p)));
   buyGrid.appendChild(frag);
 }
-
+ 
 document.querySelectorAll(".chip[data-type]").forEach(chip => {
   chip.addEventListener("click", () => {
     document.querySelectorAll(".chip[data-type]").forEach(c => c.classList.remove("active"));
@@ -232,7 +234,7 @@ document.querySelectorAll(".chip[data-type]").forEach(chip => {
     renderBuyGrid();
   });
 });
-
+ 
 document.querySelectorAll(".chip[data-condition]").forEach(chip => {
   chip.addEventListener("click", () => {
     document.querySelectorAll(".chip[data-condition]").forEach(c => c.classList.remove("active"));
@@ -241,15 +243,15 @@ document.querySelectorAll(".chip[data-condition]").forEach(chip => {
     renderBuyGrid();
   });
 });
-
+ 
 searchInput.addEventListener("input", renderBuyGrid);
-
+ 
 /* ===================================================================
    SELL FORM
 =================================================================== */
 sellForm.addEventListener("submit", async e => {
   e.preventDefault();
-
+ 
   const payload = {
     type: document.getElementById("sellType").value,
     brandModel: document.getElementById("sellBrandModel").value.trim(),
@@ -260,7 +262,7 @@ sellForm.addEventListener("submit", async e => {
     email: document.getElementById("sellEmail").value.trim(),
     createdAt: serverTimestamp()
   };
-
+ 
   try {
     await addDoc(collection(db, "sellRequests"), payload);
     sellForm.reset();
@@ -271,7 +273,7 @@ sellForm.addEventListener("submit", async e => {
     showToast("Something went wrong. Please try again.");
   }
 });
-
+ 
 /* ===================================================================
    ORDER MODAL
 =================================================================== */
@@ -280,22 +282,22 @@ function openOrderModal(product) {
   modalProductLine.textContent = `${product.title} — ₹${Number(product.price || 0).toLocaleString("en-IN")}`;
   orderModalOverlay.classList.add("open");
 }
-
+ 
 function closeOrderModal() {
   orderModalOverlay.classList.remove("open");
   currentOrderProduct = null;
   orderForm.reset();
 }
-
+ 
 orderModalClose.addEventListener("click", closeOrderModal);
 orderModalOverlay.addEventListener("click", e => {
   if (e.target === orderModalOverlay) closeOrderModal();
 });
-
+ 
 orderForm.addEventListener("submit", async e => {
   e.preventDefault();
   if (!currentOrderProduct) return;
-
+ 
   const payload = {
     productId: currentOrderProduct.id,
     productTitle: currentOrderProduct.title,
@@ -305,7 +307,7 @@ orderForm.addEventListener("submit", async e => {
     email: document.getElementById("orderEmail").value.trim(),
     createdAt: serverTimestamp()
   };
-
+ 
   try {
     await addDoc(collection(db, "orders"), payload);
     showToast("Order placed! We'll contact you soon.");
@@ -315,16 +317,12 @@ orderForm.addEventListener("submit", async e => {
     showToast("Something went wrong. Please try again.");
   }
 });
-
+ 
 /* ===================================================================
    DASHBOARD — LOGIN / LOGOUT
 =================================================================== */
-function isAuthed() {
-  return sessionStorage.getItem(AUTH_KEY) === "1";
-}
-
-function showDashboardState() {
-  if (isAuthed()) {
+function showDashboardState(isAuthed) {
+  if (isAuthed) {
     dashLogin.hidden = true;
     dashContent.hidden = false;
   } else {
@@ -332,26 +330,31 @@ function showDashboardState() {
     dashContent.hidden = true;
   }
 }
-
-dashLoginForm.addEventListener("submit", e => {
+ 
+dashLoginForm.addEventListener("submit", async e => {
   e.preventDefault();
+  const email = dashEmail.value.trim();
   const pw = dashPassword.value;
-
-  if (pw === ADMIN_PASSWORD) {
-    sessionStorage.setItem(AUTH_KEY, "1");
+ 
+  try {
+    await signInWithEmailAndPassword(auth, email, pw);
     dashError.textContent = "";
+    dashEmail.value = "";
     dashPassword.value = "";
-    showDashboardState();
-  } else {
-    dashError.textContent = "Incorrect password. Try again.";
+  } catch (err) {
+    console.error(err);
+    dashError.textContent = "Incorrect email or password. Try again.";
   }
 });
-
+ 
 dashLogout.addEventListener("click", () => {
-  sessionStorage.removeItem(AUTH_KEY);
-  showDashboardState();
+  signOut(auth);
 });
-
+ 
+onAuthStateChanged(auth, user => {
+  showDashboardState(!!user);
+});
+ 
 /* ===================================================================
    DASHBOARD — TABS
 =================================================================== */
@@ -363,7 +366,7 @@ document.querySelectorAll(".dash-tab").forEach(tab => {
     );
   });
 });
-
+ 
 /* ===================================================================
    DASHBOARD — ADD GADGET (with image -> base64)
 =================================================================== */
@@ -381,21 +384,21 @@ function compressImage(file, maxDim = 900, startQuality = 0.7) {
           width = Math.round(width * (maxDim / height));
           height = maxDim;
         }
-
+ 
         const canvas = document.createElement("canvas");
         canvas.width = width;
         canvas.height = height;
         canvas.getContext("2d").drawImage(img, 0, 0, width, height);
-
+ 
         let quality = startQuality;
         let dataUrl = canvas.toDataURL("image/jpeg", quality);
-
+ 
         // Keep shrinking quality until well under Firestore's ~1MB field limit
         while (dataUrl.length > 700000 && quality > 0.3) {
           quality -= 0.1;
           dataUrl = canvas.toDataURL("image/jpeg", quality);
         }
-
+ 
         resolve(dataUrl);
       };
       img.onerror = reject;
@@ -405,11 +408,11 @@ function compressImage(file, maxDim = 900, startQuality = 0.7) {
     reader.readAsDataURL(file);
   });
 }
-
+ 
 gImageInput.addEventListener("change", async () => {
   const file = gImageInput.files[0];
   if (!file) return;
-
+ 
   try {
     pendingImageData = await compressImage(file);
     gImagePreview.src = pendingImageData;
@@ -419,19 +422,19 @@ gImageInput.addEventListener("change", async () => {
     showToast("Could not process that image. Try a different one.");
   }
 });
-
+ 
 gImageRemove.addEventListener("click", () => {
   pendingImageData = null;
   gImageInput.value = "";
   gImagePreviewWrap.hidden = true;
 });
-
+ 
 addGadgetForm.addEventListener("submit", async e => {
   e.preventDefault();
-
+ 
   const specsRaw = document.getElementById("gSpecs").value.trim();
   const specs = specsRaw ? specsRaw.split(",").map(s => s.trim()).filter(Boolean) : [];
-
+ 
   const payload = {
     type: document.getElementById("gType").value,
     brand: document.getElementById("gBrand").value.trim(),
@@ -443,7 +446,7 @@ addGadgetForm.addEventListener("submit", async e => {
     image: pendingImageData || "",
     createdAt: serverTimestamp()
   };
-
+ 
   try {
     await addDoc(collection(db, "products"), payload);
     addGadgetForm.reset();
@@ -455,14 +458,14 @@ addGadgetForm.addEventListener("submit", async e => {
     showToast("Could not add gadget. Please try again.");
   }
 });
-
+ 
 /* ===================================================================
    DASHBOARD — TABLES
 =================================================================== */
 function renderGadgetsTable() {
   gadgetsTableBody.innerHTML = "";
   gadgetsEmpty.style.display = products.length === 0 ? "block" : "none";
-
+ 
   products.forEach(p => {
     const tr = document.createElement("tr");
     tr.innerHTML = `
@@ -475,11 +478,11 @@ function renderGadgetsTable() {
     gadgetsTableBody.appendChild(tr);
   });
 }
-
+ 
 function renderSellTable() {
   sellTableBody.innerHTML = "";
   sellEmpty.style.display = sellRequests.length === 0 ? "block" : "none";
-
+ 
   sellRequests.forEach(s => {
     const tr = document.createElement("tr");
     tr.innerHTML = `
@@ -495,11 +498,11 @@ function renderSellTable() {
     sellTableBody.appendChild(tr);
   });
 }
-
+ 
 function renderOrdersTable() {
   ordersTableBody.innerHTML = "";
   ordersEmpty.style.display = orders.length === 0 ? "block" : "none";
-
+ 
   orders.forEach(o => {
     const tr = document.createElement("tr");
     tr.innerHTML = `
@@ -514,18 +517,18 @@ function renderOrdersTable() {
     ordersTableBody.appendChild(tr);
   });
 }
-
+ 
 function formatDate(ts) {
   if (!ts || !ts.toDate) return "-";
   return ts.toDate().toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" });
 }
-
+ 
 function updateStats() {
   statGadgets.textContent = products.length;
   statSell.textContent = sellRequests.length;
   statOrders.textContent = orders.length;
 }
-
+ 
 /* ===================================================================
    DELETE BUTTON DELEGATION
 =================================================================== */
@@ -540,7 +543,7 @@ document.addEventListener("click", async e => {
     }
     return;
   }
-
+ 
   const delSell = e.target.closest("[data-del-sell]");
   if (delSell) {
     try {
@@ -551,7 +554,7 @@ document.addEventListener("click", async e => {
     }
     return;
   }
-
+ 
   const delOrder = e.target.closest("[data-del-order]");
   if (delOrder) {
     try {
@@ -563,7 +566,7 @@ document.addEventListener("click", async e => {
     return;
   }
 });
-
+ 
 /* ===================================================================
    REALTIME FIRESTORE LISTENERS
 =================================================================== */
@@ -574,21 +577,20 @@ onSnapshot(query(collection(db, "products"), orderBy("createdAt", "desc")), snap
   renderGadgetsTable();
   updateStats();
 }, err => console.error("products listener error:", err));
-
+ 
 onSnapshot(query(collection(db, "sellRequests"), orderBy("createdAt", "desc")), snapshot => {
   sellRequests = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
   renderSellTable();
   updateStats();
 }, err => console.error("sellRequests listener error:", err));
-
+ 
 onSnapshot(query(collection(db, "orders"), orderBy("createdAt", "desc")), snapshot => {
   orders = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
   renderOrdersTable();
   updateStats();
 }, err => console.error("orders listener error:", err));
-
+ 
 /* ===================================================================
    INIT
 =================================================================== */
 navigateTo("home");
-showDashboardState();
