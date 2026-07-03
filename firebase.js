@@ -23,6 +23,13 @@ import {
   serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
 /* ---------------- Your Firebase config ---------------- */
 const firebaseConfig = {
   apiKey: "AIzaSyCWL_sJWL6-D8MKPUupHp03uLoY7OnTstk",
@@ -36,6 +43,7 @@ const firebaseConfig = {
 /* ---------------- Init ---------------- */
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+const auth = getAuth(app);
 
 /* ---------------- Export everything script.js needs ---------------- */
 export {
@@ -53,5 +61,9 @@ export {
   orderBy,
   where,
   limit,
-  serverTimestamp
+  serverTimestamp,
+  auth,
+  signInWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged
 };
