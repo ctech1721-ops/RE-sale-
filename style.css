@@ -1,4 +1,4 @@
-/* ===================================================================
+* ===================================================================
    RE-TECH — Design tokens
 =================================================================== */
 :root{
@@ -11,25 +11,25 @@
   --teal-tint: #E4F8EE;
   --purple:    #6D5EF7;
   --amber:     #F5A623;
-
+ 
   --ink:       #12151A;
   --ink-soft:  #4B5259;
   --muted:     #7A8087;
   --line:      #E4E6EA;
   --bg:        #F6F7F9;
   --surface:   #FFFFFF;
-
+ 
   --font-display: 'Space Grotesk', sans-serif;
   --font-body:    'IBM Plex Sans', sans-serif;
   --font-mono:    'IBM Plex Mono', monospace;
-
+ 
   --radius-s: 8px;
   --radius-m: 14px;
   --radius-l: 22px;
   --shadow-card: 0 1px 2px rgba(18,21,26,0.05), 0 10px 26px -14px rgba(18,21,26,0.16);
   --shadow-lift: 0 24px 50px -20px rgba(10,18,36,0.35);
 }
-
+ 
 *{box-sizing:border-box;}
 html{scroll-behavior:smooth;}
 body{
@@ -45,13 +45,13 @@ p{margin:0;}
 button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit;}
 :focus-visible{outline:2px solid var(--blue);outline-offset:2px;}
 .container{max-width:1180px;margin:0 auto;padding:0 24px;}
-
+ 
 .eyebrow{
   font-family:var(--font-mono);font-size:12px;text-transform:uppercase;
   letter-spacing:0.08em;color:var(--blue);margin:0 0 8px;
 }
 .eyebrow-dark{color:#7FB2FF;}
-
+ 
 /* ---------- Buttons ---------- */
 .btn{
   display:inline-flex;align-items:center;justify-content:center;gap:6px;
@@ -64,7 +64,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
 .btn-outline:hover{border-color:var(--ink);}
 .btn-block{width:100%;}
 .btn-sm{padding:9px 16px;font-size:13.5px;border-radius:8px;}
-
+ 
 /* ===================================================================
    HEADER
 =================================================================== */
@@ -72,7 +72,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
   position:sticky;top:0;z-index:50;background:rgba(255,255,255,0.92);
   backdrop-filter:blur(10px);border-bottom:1px solid var(--line);
 }
-.header-inner{display:flex;align-items:center;justify-content:space-between;height:74px;}
+.header-inner{display:flex;align-items:center;justify-content:space-between;height:74px;flex-wrap:wrap;gap:10px;}
 .logo{display:flex;align-items:center;gap:10px;}
 .logo-box{
   width:34px;height:34px;border-radius:9px;background:var(--blue);
@@ -81,28 +81,28 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
 }
 .logo-text{display:flex;flex-direction:column;font-family:var(--font-display);font-weight:700;font-size:16.5px;color:var(--ink);}
 .logo-text small{font-family:var(--font-mono);font-weight:500;font-size:9.5px;letter-spacing:0.08em;color:var(--muted);}
-
+ 
 .main-nav{display:flex;align-items:center;gap:28px;}
 .nav-link{font-size:14.5px;font-weight:500;color:var(--ink-soft);display:flex;align-items:center;padding:6px 0;position:relative;}
 .nav-link:hover{color:var(--ink);}
 .nav-link.active{color:var(--blue);}
 .nav-link.active::after{content:"";position:absolute;left:0;right:0;bottom:-27px;height:2px;background:var(--blue);}
-
+ 
 .header-actions{display:flex;align-items:center;gap:12px;}
-.menu-toggle{display:none;flex-direction:column;gap:4px;width:36px;height:36px;align-items:center;justify-content:center;}
+.menu-toggle{display:none;flex-direction:column;gap:4px;width:36px;height:36px;align-items:center;justify-content:center;position:relative;z-index:70;}
 .menu-toggle span{width:20px;height:2px;background:var(--ink);}
-
+ 
 /* ===================================================================
    PAGES / ROUTER
 =================================================================== */
 .page{display:none;}
 .page.active{display:block;animation:fadeIn .25s ease;}
 @keyframes fadeIn{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
-
+ 
 .section-head{margin-bottom:28px;}
 .section-head h2{font-size:clamp(24px,3vw,32px);}
 .center-btn{text-align:center;margin-top:32px;}
-
+ 
 /* ===================================================================
    HOME — HERO
 =================================================================== */
@@ -118,7 +118,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
 .hero-cta .btn-outline{color:#fff;border-color:rgba(255,255,255,0.3);}
 .hero-cta .btn-outline:hover{border-color:#fff;}
 .hero-tags{display:flex;gap:18px;flex-wrap:wrap;margin-top:30px;font-size:12.5px;color:#8E9AB8;}
-
+ 
 .hero-visual{position:relative;display:flex;justify-content:center;align-items:center;}
 .hero-device{
   width:260px;height:260px;border-radius:50%;
@@ -132,16 +132,16 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
   display:flex;align-items:center;justify-content:center;text-align:center;line-height:1.3;
   box-shadow:var(--shadow-lift);
 }
-
+ 
 .stat-strip{background:var(--navy-800);}
 .stat-strip-inner{display:flex;flex-wrap:wrap;gap:0;}
 .stat{flex:1;min-width:150px;text-align:center;padding:22px 10px;border-right:1px solid rgba(255,255,255,0.08);}
 .stat:last-child{border-right:none;}
 .stat strong{display:block;font-family:var(--font-display);color:#fff;font-size:20px;}
 .stat span{font-size:12.5px;color:#8E9AB8;}
-
+ 
 .home-featured{padding:64px 0;}
-
+ 
 /* ===================================================================
    PRODUCT GRID / CARDS
 =================================================================== */
@@ -172,7 +172,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
 .pill-cond-2{background:var(--teal);}
 .pill-cond-3{background:var(--amber);}
 .pill-save{background:rgba(255,255,255,0.92);color:var(--ink);}
-
+ 
 .card-body{padding:16px;display:flex;flex-direction:column;flex:1;gap:10px;}
 .card-brand{font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:0.06em;color:var(--muted);}
 .card-title{font-family:var(--font-display);font-size:16.5px;font-weight:600;}
@@ -190,7 +190,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
 .btn-call:hover{border-color:var(--blue);color:var(--blue);}
 .btn-order{background:var(--ink);color:#fff;}
 .btn-order:hover{background:var(--navy-900);}
-
+ 
 /* ===================================================================
    ABOUT US
 =================================================================== */
@@ -203,7 +203,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
 .about-contact{margin-top:40px;padding:22px;border-radius:var(--radius-m);background:var(--navy-900);color:#fff;}
 .about-contact h3{margin-bottom:8px;}
 .about-contact p{color:#B7C0D6;font-size:14px;}
-
+ 
 /* ===================================================================
    BUY TECH — FILTERS
 =================================================================== */
@@ -222,7 +222,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
 }
 .chip.active, .chip:hover{background:var(--ink);color:#fff;border-color:var(--ink);}
 .result-count{font-size:13px;color:var(--muted);margin:16px 0 18px;}
-
+ 
 /* ===================================================================
    SELL PAGE
 =================================================================== */
@@ -233,7 +233,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
 .sell-steps li{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--line);font-size:14px;color:var(--ink-soft);}
 .sell-steps li strong{color:var(--ink);display:block;font-family:var(--font-display);font-size:14.5px;margin-bottom:2px;}
 .sell-steps li::before{content:counter(step);counter-increment:step;font-family:var(--font-mono);color:var(--blue);font-weight:600;flex-shrink:0;}
-
+ 
 /* ===================================================================
    FORM CARDS (shared: sell / add gadget)
 =================================================================== */
@@ -247,7 +247,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
 }
 .form-card input:focus, .form-card select:focus{border-color:var(--blue);}
 .form-card button{margin-top:6px;}
-
+ 
 .img-preview-wrap{position:relative;width:100%;height:130px;border-radius:var(--radius-s);overflow:hidden;border:1px solid var(--line);margin-top:-4px;}
 .img-preview-wrap img{width:100%;height:100%;object-fit:cover;}
 .img-preview-remove{
@@ -259,7 +259,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
   font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:0.06em;
   color:var(--muted);border-top:1px solid var(--line);padding-top:14px;margin-top:2px;
 }
-
+ 
 /* ===================================================================
    DASHBOARD
 =================================================================== */
@@ -283,21 +283,21 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
 .dash-hint{margin-top:14px;font-size:12px;color:var(--muted);}
 .dash-hint code{background:var(--bg);padding:2px 6px;border-radius:4px;font-family:var(--font-mono);}
 .dash-error{color:#D64545;font-size:13px;min-height:18px;margin-top:6px;}
-
+ 
 .dash-head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:24px;}
 .dash-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:30px;}
 .dash-stat{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-m);padding:20px;text-align:center;box-shadow:var(--shadow-card);}
 .dash-stat strong{display:block;font-family:var(--font-display);font-size:26px;color:var(--blue);}
 .dash-stat span{font-size:12.5px;color:var(--muted);}
-
-.dash-tabs{display:flex;gap:8px;margin-bottom:22px;border-bottom:1px solid var(--line);}
+ 
+.dash-tabs{display:flex;gap:8px;margin-bottom:22px;border-bottom:1px solid var(--line);flex-wrap:wrap;}
 .dash-tab{padding:11px 18px;font-size:14px;font-weight:500;color:var(--muted);border-bottom:2px solid transparent;margin-bottom:-1px;}
 .dash-tab.active{color:var(--blue);border-color:var(--blue);}
-
+ 
 .dash-panel{display:none;}
 .dash-panel.active{display:block;animation:fadeIn .2s ease;}
 .dash-panel-grid{display:grid;grid-template-columns:0.9fr 1.3fr;gap:22px;align-items:start;}
-
+ 
 .table-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-m);padding:22px;box-shadow:var(--shadow-card);}
 .table-card h3{font-size:16px;margin-bottom:14px;}
 .table-card-full{width:100%;}
@@ -315,7 +315,7 @@ tbody tr:last-child td{border-bottom:none;}
 }
 .row-delete:hover{background:#FDEDED;}
 .table-empty{color:var(--muted);font-size:13.5px;text-align:center;padding:20px 0;display:none;}
-
+ 
 /* ===================================================================
    MODAL
 =================================================================== */
@@ -338,7 +338,7 @@ tbody tr:last-child td{border-bottom:none;}
 .modal input{padding:11px 13px;border-radius:var(--radius-s);border:1px solid var(--line);font-family:inherit;font-size:14.5px;background:var(--bg);}
 .modal input:focus{border-color:var(--blue);}
 .modal button{margin-top:6px;}
-
+ 
 /* ===================================================================
    TOAST
 =================================================================== */
@@ -349,7 +349,7 @@ tbody tr:last-child td{border-bottom:none;}
   transition:opacity .25s ease, transform .25s ease;z-index:90;display:flex;align-items:center;gap:8px;
 }
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
-
+ 
 /* ===================================================================
    FOOTER
 =================================================================== */
@@ -363,7 +363,7 @@ tbody tr:last-child td{border-bottom:none;}
 .footer-cols a{display:block;font-size:13.5px;padding:5px 0;color:#B7C0D6;}
 .footer-cols a:hover{color:#fff;}
 .footer-bottom{margin-top:40px;padding-top:18px;border-top:1px solid rgba(255,255,255,0.1);font-size:12px;color:#7A8087;}
-
+ 
 /* ===================================================================
    RESPONSIVE
 =================================================================== */
@@ -375,10 +375,16 @@ tbody tr:last-child td{border-bottom:none;}
   .dash-panel-grid{grid-template-columns:1fr;}
 }
 @media (max-width:760px){
+  /* Mobile nav now covers the FULL screen (top:0) instead of relying on a
+     fixed header-height offset (top:74px). That old approach broke when
+     the header wrapped to two lines on narrow screens, causing the menu
+     to overlap page content instead of sitting cleanly below it. */
   .main-nav{
-    position:fixed;top:74px;left:0;right:0;bottom:0;background:var(--surface);
-    flex-direction:column;align-items:flex-start;gap:0;padding:10px 24px;
-    transform:translateY(-110%);transition:transform .25s ease;z-index:40;
+    position:fixed;top:0;left:0;right:0;bottom:0;background:var(--surface);
+    flex-direction:column;align-items:flex-start;gap:0;
+    padding:100px 24px 24px;
+    transform:translateY(-110%);transition:transform .25s ease;
+    z-index:60;overflow-y:auto;
   }
   .main-nav.open{transform:translateY(0);}
   .main-nav a{width:100%;padding:14px 0;border-bottom:1px solid var(--line);}
